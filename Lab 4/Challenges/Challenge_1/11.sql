@@ -1,0 +1,3 @@
+--In 11.sql, write a SQL query using the SUM() function that orders the artist in ascending order by their sum of song duration in ms of all their songs in the table. 
+-- In 11.sql, write a SQL query using the SUM() function that orders the artist in ascending order by their sum of song duration in ms of all their songs in the table. 
+SELECT artist, SUM(duration_ms) FROM SONGS GROUP BY artist ORDER BY SUM(duration_ms) ASC;

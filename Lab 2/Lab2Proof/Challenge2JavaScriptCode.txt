@@ -1,0 +1,27 @@
+//javascript code challenge 2
+var theCompany = document.querySelector('.company');
+ var thePrice = document.querySelector('.price');
+ var theExchange = document.querySelector('.exchange');
+ var theSec = document.querySelector('.state');
+
+
+function clickThis(anId){
+   var inputVal = document.getElementById("fname").value;
+  console.log("clickme"+inputVal);
+  let theURL = 'https://financialmodelingprep.com/api/v3/profile/'+inputVal+'?apikey=462675ba77241454753ef805dcc91c1f'
+  //theURL = 'https://jsonplaceholder.typicode.com/posts/1';
+  fetch(theURL)
+  .then(response=>response.json())
+  .then(function(response){
+    console.log(response[0]);
+      for(let key in response[0]){
+        try{
+      var r = response[0]; document.getElementById(key).innerHTML = r[key];
+        console.log(key);
+        }
+        catch(err){}
+        }
+      
+    }
+        );
+}

@@ -1,0 +1,63 @@
+var theHour = document.querySelector('.hour');
+var theMin = document.querySelector('.min');
+var theSec = document.querySelector('.sec');
+var theDate = document.querySelector('.date');
+var thePM = document.querySelector('.ampm');
+var instance = 0;
+
+function convertMe() {
+  if(instance == 1){
+    instance = 0;
+  }
+  else{
+    instance = 1;
+  }
+}
+
+ document.addEventListener('DOMContentLoaded', (event) => {
+  var theRange = document.querySelector("input[name = 'number']");
+  var theCels = document.querySelector(".number h1")
+  
+  theRange.addEventListener("input", function (event){
+    const letters = ["Pacific Standard Time", "Central Standard Time", "Eastern Standard Time", "Japan Standard Time", "Central European Standard Time"];
+    const timeZones = [-8,-6, -5, 9, 1];
+    const theValue = event.target.value;
+    const output = letters[theValue-1];
+    offset1 = timeZones[theValue-1]
+    theCels.textContent = output;
+    
+    setInterval(function(){
+  // create Date object for current location
+    
+  var today = new Date();
+      theDate.innerHTML = "Year: "+ today.getFullYear();
+  
+  // convert to msec
+  // subtract local time zone offset
+  // get UTC time in msec
+  var utc = today.getTime() + (today.getTimezoneOffset() * 60000)
+  
+  // create new Date object for different city
+  // using you can convert from UTC-0 to any time in the world for example california is 
+  // UTC-8 so the offset will be -8
+  var offset = offset1;
+  var nd = new Date(utc + (3600000*offset));
+      theHour.innerHTML = (nd.getHours()).toString().padStart(2,'0');
+      if(instance == 1){
+        if(theHour.innerHTML > 12){
+        theHour.innerHTML = (nd.getHours()).toString().padStart(2,'0') - 12;
+        thePM.innerHTML = "pm";
+        }
+        else{
+          thePM.innerHTML = "am";
+        }
+      }
+      else{
+        thePM.innerHTML = "hours";
+      }
+     
+  theMin.innerHTML = nd.getMinutes().toString().padStart(2,'0');
+  theSec.innerHTML = nd.getSeconds().toString().padStart(2,'0');
+}, 100);
+  });
+ });
